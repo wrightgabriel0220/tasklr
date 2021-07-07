@@ -4,7 +4,8 @@
   "description": "Dynamic scheduling app",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/server.js"
+    "start": "nodemon server/server.js",
+    "build": "webpack -w ./client/src --config webpack.config.js"
   },
   "repository": {
     "type": "git",
