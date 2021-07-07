@@ -1,0 +1,28 @@
+{
+  "name": "tasklr",
+  "version": "1.0.0",
+  "description": "Dynamic scheduling app",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrightgabriel0220/tasklr.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wrightgabriel0220/tasklr/issues"
+  },
+  "homepage": "https://github.com/wrightgabriel0220/tasklr#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "webpack": "^5.43.0",
+    "webpack-cli": "^4.7.2"
+  }
+}
