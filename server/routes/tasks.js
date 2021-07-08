@@ -31,15 +31,15 @@ tasks.put('/:id/edit', (req, res) => {
 });
 
 tasks.delete('/:id/delete', (req, res) => {
-  // db.deleteSchedule(req.params.id)
-  //   .then(results => {
-  //     res.send(results);
-  //   })
-  //   .catch(err => {
-  //     console.error(err);
-  //     res.status(500);
-  //     res.end();
-  //   })
+  db.deleteTask(req.params.id)
+    .then(results => {
+      res.send(results);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+      res.end();
+    })
 });
 
-module.exports = schedules;
+module.exports = tasks;

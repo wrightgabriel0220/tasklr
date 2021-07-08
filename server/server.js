@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const schedules = require('./routes/schedules.js');
-const tasks = require('./routes/schedules.js');
+const tasks = require('./routes/tasks.js');
 const db = require('./../database/controllers.js');
 
 const app = express();

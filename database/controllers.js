@@ -52,7 +52,13 @@ const deleteSchedule = (id) => {
 };
 
 const deleteTask = (id) => {
-
+  return client.query('DELETE FROM tasks WHERE (id = $1)', [id])
+  .then(results => {
+    return results;
+  })
+  .catch(err => {
+    return err;
+  })
 };
 
 module.exports = { getAllFrom, addSchedule, addTask, deleteSchedule, deleteTask };
