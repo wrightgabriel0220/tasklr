@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar.jsx';
+import ScheduleManager from './ScheduleManager.jsx';
 import axios from 'axios';
 
 const App = props => {
@@ -10,7 +11,7 @@ const App = props => {
     if (isLoading) {
       axios.get('/schedules/list')
         .then(results => {
-          setSchedules(results);
+          setSchedules(results.data);
           setLoading(false);
         })
         .catch(err => {
@@ -18,6 +19,10 @@ const App = props => {
         })
     }
   }, []);
+
+  useEffect(() => {
+    console.log(schedules);
+  }, [schedules])
 
   if (isLoading) {
     return (
@@ -27,7 +32,8 @@ const App = props => {
 
   return (
     <div id="app-body">
-      <Calendar schedules={[{ span: '1 week', start: 'July 1, 2021', end: 'July 8, 2021'}]}/>
+      <ScheduleManager schedules={schedules}/>
+      <Calendar schedules={schedules}/>
     </div>
   );
 };

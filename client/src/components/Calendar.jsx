@@ -17,12 +17,11 @@ const Calendar = props => {
       let numberOfDummyTasks = Math.random() * 5
 
       dayList.push({ date: dateForI.toDateString(), tasks: dummyTasks, schedules: [] });
-      console.log(dayList[i].date);
     }
 
     for (let schedule of props.schedules) {
       dayList.forEach(day => {
-        if (new Date(day.date) >= new Date(schedule.start) && new Date(day.date) <= new Date(schedule.end)) {
+        if (new Date(day.date) >= new Date(schedule.start_date) && new Date(day.date) <= new Date(schedule.end_date)) {
           day.schedules.push(schedule);
         }
       })
