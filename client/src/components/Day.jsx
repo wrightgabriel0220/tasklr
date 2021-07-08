@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Task from './task.jsx';
 
 const Day = props => {
+  const [ isScheduled, setIsScheduled ] = useState(Boolean(props.schedules.length > 0));
+
   return (
-    <div className="day">
+    <div className="day" style={{ backgroundColor: isScheduled ? "green" : "white" }}>
       {props.date}
       <hr></hr>
       Tasks:

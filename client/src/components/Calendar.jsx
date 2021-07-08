@@ -14,14 +14,18 @@ const Calendar = props => {
     for (let i = 0; i < daysInMonth; i++) {
       let dateForI = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
       let dummyTasks = [];
-      let numberOfDummyTasks = Math.random() * 5;
+      let numberOfDummyTasks = Math.random() * 5
 
-      for (let x = 0; x < numberOfDummyTasks; x++) {
-        dummyTasks.push('fakeTask');
-      }
-
-      dayList.push({ date: dateForI.toDateString(), tasks: dummyTasks });
+      dayList.push({ date: dateForI.toDateString(), tasks: dummyTasks, schedules: [] });
       console.log(dayList[i].date);
+    }
+
+    for (let schedule of props.schedules) {
+      dayList.forEach(day => {
+        if (new Date(day.date) >= new Date(schedule.start) && new Date(day.date) <= new Date(schedule.end)) {
+          day.schedules.push(schedule);
+        }
+      })
     }
 
     setMonth({ name: month.name, days: dayList })
@@ -35,7 +39,7 @@ const Calendar = props => {
 
   return (
     <div id="calendar">
-      {month.days.map((day, index) => <Day key={index} date={day.date} tasks={day.tasks} />)}
+      {month.days.map((day, index) => <Day schedules={day.schedules} key={index} date={day.date} tasks={day.tasks} />)}
     </div>
   );
 };
