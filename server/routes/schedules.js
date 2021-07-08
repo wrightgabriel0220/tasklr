@@ -15,7 +15,6 @@ schedules.get('/list', (req, res) => {
 });
 
 schedules.post('/add', (req, res) => {
-  console.log(req.body);
   db.addSchedule(req.body.span, req.body.start, req.body.end)
     .then(results => {
       res.send(results);
@@ -28,11 +27,19 @@ schedules.post('/add', (req, res) => {
 });
 
 schedules.put('/:id/edit', (req, res) => {
-
+  // don't worry about this for current scope
 });
 
 schedules.delete('/:id/delete', (req, res) => {
-
+  db.deleteSchedule(req.params.id)
+    .then(results => {
+      res.send(results);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+      res.end();
+    })
 });
 
 module.exports = schedules;

@@ -15,16 +15,18 @@ const getAllFrom = tableName => {
   return client.query(`SELECT * FROM ${tableName}`)
     .then(results => {
       return results.rows;
-    }).catch(err => {
+    })
+    .catch(err => {
       return err;
     })
 };
 
 const addSchedule = (span, start, end) => {
   return client.query('INSERT INTO schedules (span, start_date, end_date) VALUES ($1, $2, $3)', [span, start, end])
-  .then(results => {
+    .then(results => {
       return results;
-    }).catch(err => {
+    })
+    .catch(err => {
       return err;
     })
 };
@@ -34,7 +36,13 @@ const addTask = (description, parent_schedule, start_time, duration) => {
 };
 
 const deleteSchedule = (id) => {
-
+  return client.query('DELETE FROM schedules WHERE (id = $1)', [id])
+    .then(results => {
+      return results;
+    })
+    .catch(err => {
+      return err;
+    })
 };
 
 const deleteTask = (id) => {
