@@ -12,7 +12,16 @@ const Calendar = props => {
     let dayList = [];
 
     for (let i = 0; i < daysInMonth; i++) {
-      dayList.push({ date: new Date(currentDate.getYear(), currentDate.getMonth(), i), tasks: [] });
+      let dateForI = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
+      let dummyTasks = [];
+      let numberOfDummyTasks = Math.random() * 5;
+
+      for (let x = 0; x < numberOfDummyTasks; x++) {
+        dummyTasks.push('fakeTask');
+      }
+
+      dayList.push({ date: dateForI.toDateString(), tasks: dummyTasks });
+      console.log(dayList[i].date);
     }
 
     setMonth({ name: month.name, days: dayList })
