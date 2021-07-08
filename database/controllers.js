@@ -31,8 +31,14 @@ const addSchedule = (span, start, end) => {
     })
 };
 
-const addTask = (description, parent_schedule, start_time, duration) => {
-
+const addTask = (description, schedID, start, duration) => {
+  return client.query('INSERT INTO tasks (description, parent_schedule, start_time, duration) VALUES ($1, $2, $3, $4)', [description, schedID, start, duration])
+    .then(results => {
+      return results;
+    })
+    .catch(err => {
+      return err;
+    })
 };
 
 const deleteSchedule = (id) => {

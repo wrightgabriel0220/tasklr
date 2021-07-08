@@ -15,15 +15,15 @@ tasks.get('/list', (req, res) => {
 });
 
 tasks.post('/add', (req, res) => {
-  // db.addSchedule(req.body.span, req.body.start, req.body.end)
-  //   .then(results => {
-  //     res.send(results);
-  //   })
-  //   .catch(err => {
-  //     console.error(err);
-  //     res.status(500);
-  //     res.end();
-  //   })
+  db.addTask(req.body.description, req.body.schedID, req.body.start, req.body.duration)
+    .then(results => {
+      res.send(results);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+      res.end();
+    })
 });
 
 tasks.put('/:id/edit', (req, res) => {
