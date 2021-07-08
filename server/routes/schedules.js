@@ -14,8 +14,17 @@ schedules.get('/list', (req, res) => {
     })
 });
 
-schedules.post('/create', (req, res) => {
-
+schedules.post('/add', (req, res) => {
+  console.log(req.body);
+  db.addSchedule(req.body.span, req.body.start, req.body.end)
+    .then(results => {
+      res.send(results);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+      res.end();
+    })
 });
 
 schedules.put('/:id/edit', (req, res) => {

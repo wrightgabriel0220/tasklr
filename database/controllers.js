@@ -14,7 +14,7 @@ client.connect()
 const getAllFrom = tableName => {
   return client.query(`SELECT * FROM ${tableName}`)
     .then(results => {
-      return results;
+      return results.rows;
     }).catch(err => {
       return err;
     })
