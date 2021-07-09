@@ -14,21 +14,21 @@ const Calendar = props => {
       dayList.push({ date: new Date(currentDate.getFullYear(), currentDate.getMonth(), i).toDateString(), tasks: [], schedules: [] });
     }
 
-    for (let schedule of props.schedules) {
-      dayList.forEach(day => {
-        if (new Date(day.date) >= new Date(schedule.start) && new Date(day.date) <= new Date(schedule.end)) {
-          schedule.tasks.forEach((task, index) => {
-            if (new Date(day.date).toDateString() === new Date(task.date).toDateString()) {
-              day.tasks.push(task);
-            }
-          })
-          day.schedules.push(schedule);
-        }
-      });
-    }
+    dayList.forEach(day => {
+      if (new Date(day.date) >= new Date(props.schedule.start) && new Date(day.date) <= new Date(props.schedule.end)) {
+        console.log(new Date(props.schedule.start));
+        console.log(new Date(props.schedule.end));
+        props.schedule.tasks.forEach((task, index) => {
+          if (new Date(day.date).toDateString() === new Date(task.date).toDateString()) {
+            day.tasks.push(task);
+          }
+        })
+        day.schedules.push(props.schedule);
+      }
+    });
 
-    setMonth({ name: month.name, days: dayList })
-  }, [])
+    setMonth({ name: month.name, days: dayList });
+  }, [props.schedule]);
 
   // Year has months
   // Month has weeks

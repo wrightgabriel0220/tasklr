@@ -6,12 +6,18 @@ import axios from 'axios';
 const App = props => {
   const [ isLoading, setLoading ] = useState(true);
   const [ schedules, setSchedules ] = useState([]);
+  const [ activeSchedule, setActiveSchedule ] = useState({});
+
+  const selectSchedule = index => {
+    setActiveSchedule(schedules[index]);
+  };
 
   useEffect(() => {
     if (isLoading) {
       axios.get('/schedules/list')
         .then(results => {
           setSchedules(results.data);
+          setActiveSchedule(results.data[0]);
           setLoading(false);
         })
         .catch(err => {
@@ -21,8 +27,8 @@ const App = props => {
   }, []);
 
   useEffect(() => {
-    console.log(schedules);
-  }, [schedules])
+    console.log(activeSchedule);
+  }, [activeSchedule]);
 
   if (isLoading) {
     return (
@@ -32,8 +38,8 @@ const App = props => {
 
   return (
     <div id="app-body">
-      <ScheduleManager schedules={schedules}/>
-      <Calendar schedules={schedules}/>
+      <ScheduleManager selectSchedule={selectSchedule} schedules={schedules}/>
+      <Calendar schedule={activeSchedule}/>
     </div>
   );
 };
