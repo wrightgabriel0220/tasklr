@@ -4,27 +4,27 @@ import Day from './Day.jsx';
 const Calendar = props => {
   const [ currentDate, setCurrentDate ] = useState(new Date());
   const [ month, setMonth ] = useState({ name: currentDate.getMonth(), days: [] });
-  const [ day, setDay ] = useState(currentDate.getDay());
 
   useEffect(() => {
-    let firstDayOfMonth = new Date(currentDate.getYear(), currentDate.getMonth()).getDay();
-    let daysInMonth = 32 - new Date(currentDate.getYear(), currentDate.getMonth(), 32).getDate();
+    let firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth()).getDay();
+    let daysInMonth = 32 - new Date(currentDate.getFullYear(), currentDate.getMonth(), 32).getDate();
     let dayList = [];
 
     for (let i = 0; i < daysInMonth; i++) {
-      let dateForI = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
-      let dummyTasks = [];
-      let numberOfDummyTasks = Math.random() * 5
-
-      dayList.push({ date: dateForI.toDateString(), tasks: dummyTasks, schedules: [] });
+      dayList.push({ date: new Date(currentDate.getFullYear(), currentDate.getMonth(), i).toDateString(), tasks: [], schedules: [] });
     }
 
     for (let schedule of props.schedules) {
       dayList.forEach(day => {
-        if (new Date(day.date) >= new Date(schedule.start_date) && new Date(day.date) <= new Date(schedule.end_date)) {
+        if (new Date(day.date) >= new Date(schedule.start) && new Date(day.date) <= new Date(schedule.end)) {
+          schedule.tasks.forEach((task, index) => {
+            if (new Date(day.date).toDateString() === new Date(task.date).toDateString()) {
+              day.tasks.push(task);
+            }
+          })
           day.schedules.push(schedule);
         }
-      })
+      });
     }
 
     setMonth({ name: month.name, days: dayList })

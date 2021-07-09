@@ -15,7 +15,7 @@ tasks.get('/list', (req, res) => {
 });
 
 tasks.post('/add', (req, res) => {
-  db.addTask(req.body.description, req.body.schedID, req.body.start, req.body.duration)
+  db.addTask(req.body.description, req.body.schedID, req.body.date, req.body.start, req.body.duration)
     .then(results => {
       res.send(results);
     })

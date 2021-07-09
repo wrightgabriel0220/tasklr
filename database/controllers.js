@@ -22,7 +22,7 @@ const getAllFrom = tableName => {
 };
 
 const getSchedulesAndTasks = () => {
-  return client.query('SELECT schedules.id AS sid, span, start_date, end_date, tasks.id AS tid, description, parent_schedule, start_time, duration FROM schedules LEFT OUTER JOIN tasks ON tasks.parent_schedule = schedules.id')
+  return client.query('SELECT schedules.id AS sid, span, start_date, end_date, tasks.id AS tid, description, parent_schedule, date, start_time, duration FROM schedules LEFT OUTER JOIN tasks ON tasks.parent_schedule = schedules.id')
     .then(results => {
       return results.rows;
     })
@@ -41,8 +41,8 @@ const addSchedule = (span, start, end) => {
     })
 };
 
-const addTask = (description, schedID, start, duration) => {
-  return client.query('INSERT INTO tasks (description, parent_schedule, start_time, duration) VALUES ($1, $2, $3, $4)', [description, schedID, start, duration])
+const addTask = (description, schedID, date, start, duration) => {
+  return client.query('INSERT INTO tasks (description, parent_schedule, date, start_time, duration) VALUES ($1, $2, $3, $4, $5)', [description, schedID, date, start, duration])
     .then(results => {
       return results;
     })

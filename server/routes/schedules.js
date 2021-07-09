@@ -5,7 +5,27 @@ const schedules = express.Router();
 schedules.get('/list', (req, res) => {
   db.getSchedulesAndTasks()
     .then(results => {
-      res.send(results);
+      let schedules = [];
+      for (let row of results) {
+        if (schedules.some(schedule => schedule.id === row.sid)) {
+          schedules.forEach(schedule => {
+            if (schedule.id === row.sid) {
+              schedule.tasks.push({ id: row.tid, desc: row.description, date: row.date, start: row.start_time, duration: row.duration });
+            }
+          })
+        } else {
+          schedules.push({
+            id: row.sid,
+            span: row.span,
+            start: row.start_date,
+            end: row.end_date,
+            tasks: [
+              { id: row.tid, desc: row.description, date: row.date, start: row.start_time, duration: row.duration }
+            ]
+          });
+        }
+      }
+      res.send(schedules);
     })
     .catch(err => {
       console.error(err);
