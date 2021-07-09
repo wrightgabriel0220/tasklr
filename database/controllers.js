@@ -21,6 +21,16 @@ const getAllFrom = tableName => {
     })
 };
 
+const getSchedulesAndTasks = () => {
+  return client.query('SELECT schedules.id AS sid, span, start_date, end_date, tasks.id AS tid, description, parent_schedule, start_time, duration FROM schedules LEFT OUTER JOIN tasks ON tasks.parent_schedule = schedules.id')
+    .then(results => {
+      return results.rows;
+    })
+    .catch(err => {
+      return err;
+    })
+}
+
 const addSchedule = (span, start, end) => {
   return client.query('INSERT INTO schedules (span, start_date, end_date) VALUES ($1, $2, $3)', [span, start, end])
     .then(results => {
@@ -61,4 +71,4 @@ const deleteTask = (id) => {
   })
 };
 
-module.exports = { getAllFrom, addSchedule, addTask, deleteSchedule, deleteTask };
+module.exports = { getAllFrom, getSchedulesAndTasks, addSchedule, addTask, deleteSchedule, deleteTask };

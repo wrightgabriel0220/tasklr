@@ -3,7 +3,7 @@ const db = require('./../../database/controllers.js');
 const schedules = express.Router();
 
 schedules.get('/list', (req, res) => {
-  db.getAllFrom('schedules')
+  db.getSchedulesAndTasks()
     .then(results => {
       res.send(results);
     })
