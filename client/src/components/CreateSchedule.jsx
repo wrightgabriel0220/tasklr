@@ -23,19 +23,22 @@ const CreateSchedule = props => {
       console.log('end: ', end);
     }
 
-    axios.post('/schedules/add', {
-      span: span,
-      start: start,
-      end: end
-    })
-    .then(results => {
-      console.log(results);
-    })
-    .catch(err => {
-      console.error(err);
-    })
-
-    props.handleModal(true, '');
+    if (document.getElementById('schedule-form').checkValidity()) {
+      axios.post('/schedules/add', {
+        span: span,
+        start: start,
+        end: end
+      })
+      .then(results => {
+        console.log(results);
+        props.handleModal(true, '');
+      })
+      .catch(err => {
+        console.error(err);
+      })
+    } else {
+      document.getElementById('schedule-form').reportValidity();
+    }
   }
 
   return (

@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const App = props => {
   const [ isLoading, setLoading ] = useState(true);
+  const [ needsUpdate, setNeedsUpdate ] = useState(false);
   const [ schedules, setSchedules ] = useState([]);
   const [ activeSchedule, setActiveSchedule ] = useState({});
   const [ showModal, setShowModal ] = useState(false);
@@ -17,11 +18,10 @@ const App = props => {
 
   const handleModal = (isShowing, body) => {
     if (isShowing === false) {
-      console.log('Turning on modal');
       setShowModal(true);
       setModalContent(body);
     } else {
-      console.log('Turning off modal');
+      setNeedsUpdate(true);
       setShowModal(false);
       setModalContent('');
     }
@@ -42,8 +42,17 @@ const App = props => {
   }, []);
 
   useEffect(() => {
-    console.log(activeSchedule);
-  }, [activeSchedule]);
+    if (needsUpdate) {
+      axios.get('/schedules/list')
+        .then(results => {
+          setSchedules(results.data);
+          setNeedsUpdate(false);
+        })
+        .catch(err => {
+          console.error(err);
+        })
+    }
+  }, [needsUpdate])
 
   if (isLoading) {
     return (
