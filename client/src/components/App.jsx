@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import Calendar from './Calendar.jsx';
 import ScheduleManager from './ScheduleManager.jsx';
+import Calendar from './Calendar.jsx';
+import Modal from './Modal.jsx';
 import axios from 'axios';
 
 const App = props => {
   const [ isLoading, setLoading ] = useState(true);
   const [ schedules, setSchedules ] = useState([]);
   const [ activeSchedule, setActiveSchedule ] = useState({});
+  const [ showModal, setShowModal ] = useState(false);
+  const [ modalContent, setModalContent ] = useState('');
 
   const selectSchedule = index => {
     setActiveSchedule(schedules[index]);
+  };
+
+  const handleModal = (isShowing, body) => {
+    if (isShowing === false) {
+      console.log('Turning on modal');
+      setShowModal(true);
+      setModalContent(body);
+    } else {
+      console.log('Turning off modal');
+      setShowModal(false);
+      setModalContent('');
+    }
   };
 
   useEffect(() => {
@@ -38,7 +53,8 @@ const App = props => {
 
   return (
     <div id="app-body">
-      <ScheduleManager selectSchedule={selectSchedule} schedules={schedules}/>
+      <Modal handleModal={handleModal} show={showModal} content={modalContent}/>
+      <ScheduleManager handleModal={handleModal} selectSchedule={selectSchedule} schedules={schedules}/>
       <Calendar schedule={activeSchedule}/>
     </div>
   );
